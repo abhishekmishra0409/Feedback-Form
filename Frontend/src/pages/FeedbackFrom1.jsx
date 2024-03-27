@@ -170,7 +170,7 @@ const FeedbackForm1 = () => {
                                 <li>Are the assignment/lab experiment procedure clearly explained</li>
                                 <li>The learning resourse in the course help you to achive the course outcomes (Lecture notes,PPTs,Online meterial etc.)</li>
                                 <li>The Quality of teaching in the course help you to achive the course outcomes</li>
-                                <li>Are you motivated to achive the course outcomes.(Having the desire or drive to learn, to complete task and to willing strive for goals)</li>
+                                <li>Are you motivated to achive the cou rse outcomes.(Having the desire or drive to learn, to complete task and to willing strive for goals)</li>
                                 <li>Your overall satisfaction about the course</li>
                             </ul>
                         </div>
