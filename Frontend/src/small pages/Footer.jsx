@@ -1,9 +1,8 @@
-import React from 'react'
 import "./Footer.css"
-const Footer = () => {
+const Footer = ({ fixed }) => {
   return (
     <div>
-       <footer>
+       <footer className={fixed ? "fixed-footer" : ""}>
                 <div><h4>All rights reserved &copy; by SVCE</h4></div>
                 <div className="names">
                     <h2>Designed and Developed by</h2>

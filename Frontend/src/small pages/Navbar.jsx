@@ -1,4 +1,4 @@
-import React from 'react'
+import { Link } from "react-router-dom"
 import "./Navbar.css"
 
 const Navbar = () => {
@@ -11,9 +11,14 @@ const Navbar = () => {
                     <h2>Swami Vivekanand Groups of Institutions</h2>
                     <p>Engineering | Pharmacy | Management | Diploma</p>
                 </div>
-                <button className='button2'>
+                
+                    <Link to={'/login'}>
+                    <button className='button2'>
                     ADMIN
-                </button>
+                    </button>
+                    </Link>
+                    
+                
             </div>
     
   )

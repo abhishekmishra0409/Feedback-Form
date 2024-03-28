@@ -1,4 +1,3 @@
-import React from 'react'
 import Navbar from '../small pages/Navbar'
 import Footer from '../small pages/Footer'
 import { useState } from 'react'
@@ -75,7 +74,6 @@ const StudentFeedback = () => {
               alert('Error: Enrollment number has already been used.');
           } else {
               alert('Feedback Submitted successfully!');
-              // Reset the form after successful submission
               setFormData({
                   branch: '',
                   semester: '',
@@ -99,6 +97,7 @@ const StudentFeedback = () => {
 
       <label>
         Session:
+        </label>
         <select name="session" value={formData.session} onChange={handleInputChange}>
             <option value=""> Select Session </option>
             <option value="2015-2016">2015-2016</option>
@@ -119,27 +118,27 @@ const StudentFeedback = () => {
             <option value="2030-2031">2030-2031</option>
             <option value="2031-2032">2031-2032</option>
         </select>
-      </label>
+      
       <br />
       <label>
         Course:
+        </label>
         <select name="course" value={formData.course} onChange={handleInputChange}>
           <option value="">Select Course</option>
           <option value="btech">B.Tech</option>
           <option value="mtech">M.Tech</option>
         </select>
-      </label>
       <br />
       {formData.course === 'btech' && (
         <>
           <label>
             Branch:
+            </label>
             <select name="branch" value={formData.branch} onChange={handleInputChange}>
               <option value="">Select Branch</option>
               <option value="cse">CSE</option>
               <option value="ece">ECE</option>
             </select>
-          </label>
           <br />
         </>
       )}
@@ -149,12 +148,13 @@ const StudentFeedback = () => {
 
         <label>
             Branch:
+            </label>
             <select name="branch" value={formData.branch} onChange={handleInputChange}>
               <option value="">Select Branch</option>
               <option value="cse">ITE</option>
               <option value="ece">MEE</option>
             </select>
-          </label>
+          
         </>
           )
       } 
@@ -163,6 +163,7 @@ const StudentFeedback = () => {
 
       <label>
         Semester:
+        </label>
         <select name="semester" value={formData.semester} onChange={handleInputChange}>
           <option value="">Select Semester</option>
           <option value="1">1st Semester</option>
@@ -174,10 +175,11 @@ const StudentFeedback = () => {
           <option value="7">7th Semester</option>
           <option value="8">8th Semester</option>
         </select>
-      </label>
+      
       <br />
       <label>
           Year:
+          </label>
         <select name="year" value={formData.year} onChange={handleInputChange}>
           <option value="">Select Year</option>
           <option value="1">1st year</option>
@@ -185,7 +187,7 @@ const StudentFeedback = () => {
           <option value="3">3rd year</option>
           <option value="4">4th year</option>
            </select>
-      </label>
+      
       <br />
 
     </div>
