@@ -3,14 +3,18 @@ const Alumni = require('../Model/AlumniModel');
 const AlumniFeedback = async (req, res) => {
     try {
 
+        const {name, enrollment, passout, course, branch, currentStatus, mail, description, questionRatings} = req.body;
+
         const newAlumni = new Alumni({
-            Name: req.body.Name,
-            Enrollment: req.body.Enrollment,
-            CompletionYear: req.body.CompletionYear,
-            email: req.body.email,
-            Program: req.body.Program,
-            CurrentStatus: req.body.CurrentStatus,
-            questionRating: req.body.questionRating
+            name,
+            enrollment,
+            passout,
+            course,
+            branch,
+            currentStatus,
+            mail,
+            description,
+            questionRatings
         });
 
         const savedAlumni = await newAlumni.save();

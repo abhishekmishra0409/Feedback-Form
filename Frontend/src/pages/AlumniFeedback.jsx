@@ -41,7 +41,7 @@ const AlumniFeedback = () => {
       
     const handleSubmit = async (e) => {
       e.preventDefault();
-
+      console.log(formData);
       if (
           !formData.name ||
           !formData.enrollment ||
@@ -59,7 +59,7 @@ const AlumniFeedback = () => {
       }
 
       try {
-          const response = await fetch('', {
+          const response = await fetch('http://localhost:3000/alumni/feedback', {
               method: 'POST',
               headers: {
                   'Content-Type': 'application/json',
@@ -73,7 +73,7 @@ const AlumniFeedback = () => {
                   currentStatus: formData.currentStatus,
                   mail: formData.mail, 
                   description: formData.description, 
-                  questionRatings: formData.questionRatings,
+                  questionRatings: formData.questionRatings
               }),
           });
 
@@ -93,7 +93,7 @@ const AlumniFeedback = () => {
                   currentStatus: '',
                   mail: '',
                   description: '',
-                  questionRatings: Array(9).fill(0),
+                  questionRatings: Array(9).fill(0)
               });
           }
       } catch (error) {
@@ -126,7 +126,7 @@ const AlumniFeedback = () => {
      
           <label>
             Passout Year:
-          <input name='passout' type='text' placeholder='(i.e) 2018, 2021, 2022 ..'  />
+          <input name='passout' type='text' placeholder='(i.e) 2018, 2021, 2022 ..' value={formData.passout} onChange={handleInputChange} />
           </label>
           <br />
       

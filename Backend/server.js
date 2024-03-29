@@ -1,5 +1,7 @@
 const express = require('express')
 const mongoose = require('mongoose')
+const cors = require("cors");
+
 const studentRoute = require('./Route/StudentRoute');
 const facultyRoute = require('./Route/FacultyRoute');
 const alumniRoute = require('./Route/AlumniRoute');
@@ -12,6 +14,15 @@ app.use(express.json());
 app.use("/student",studentRoute );
 app.use("/faculty",facultyRoute );
 app.use("/alumni",alumniRoute );
+
+const corsOptions = {
+    origin: 'http://localhost:5173', // Replace with your origin
+    methods: ['GET', 'POST'],     // Allow only GET and POST requests
+    allowedHeaders: ['Content-Type'], // Allow only Content-Type header
+  };
+app.use(cors(corsOptions));
+
+
 
 const connectDB = async () => {
     try {
