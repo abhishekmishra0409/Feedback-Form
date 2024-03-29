@@ -1,31 +1,39 @@
 const mongoose = require('mongoose');
 
 const AlumniSchema = new mongoose.Schema({
-    Name: {
+    name: {
         type: String,
         required: true
     },
-    Enrollment: {
+    enrollment: {
         type: String,
         required: true
     },
-    CompletionYear: {
+    passout: {
         type: String,
         required: true
     },
-    email: {
+    mail: {
         type: String,
         required: true
     },
-    Program: {
+    course: {
         type: String,
         required: true
     },
-    CurrentStatus: {
+    branch: {
         type: String,
         required: true
     },
-    questionRating: [{
+    currentStatus: {
+        type: String,
+        required: true
+    },
+    description: {
+        type: String,
+        // required: true
+    },
+    questionRatings: [{
         type: Number,
         required: true,
         min: 1,
