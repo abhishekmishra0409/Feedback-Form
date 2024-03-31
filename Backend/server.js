@@ -1,39 +1,40 @@
 const express = require('express')
 const mongoose = require('mongoose')
-const cors = require("cors");
-
 const studentRoute = require('./Route/StudentRoute');
 const facultyRoute = require('./Route/FacultyRoute');
 const alumniRoute = require('./Route/AlumniRoute');
+const cors = require('cors')
+const morgan = require('morgan')
 
 const app = express();
 
 const PORT = 3000;
-
+app.use(morgan('dev'))
 app.use(express.json());
+app.use(cors());
 app.use("/student",studentRoute );
 app.use("/faculty",facultyRoute );
 app.use("/alumni",alumniRoute );
 
-const corsOptions = {
-    origin: 'http://localhost:5173', // Replace with your origin
-    methods: ['GET', 'POST'],     // Allow only GET and POST requests
-    allowedHeaders: ['Content-Type'], // Allow only Content-Type header
-  };
-app.use(cors(corsOptions));
 
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(500).send('Internal Server Error');
+});
 
 
 const connectDB = async () => {
     try {
         await mongoose.connect(
-            "mongodb://0.0.0.0/Feedback_Form"
+            "mongodb://0.0.0.0/Feedback_Form",
+
         );
         console.log("Connected to MongoDB");
     } catch (error) {
         console.log("Failed to connect MongoDB", error);
     }
 };
+
 connectDB();
 
 

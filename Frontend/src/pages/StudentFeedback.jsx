@@ -2,6 +2,8 @@ import Navbar from '../small pages/Navbar'
 import Footer from '../small pages/Footer'
 import { useState } from 'react'
 import './submit.css'
+import axios from 'axios'
+import { message } from 'antd'
 
 const StudentFeedback = () => {
         const [formData, setFormData] = useState({
@@ -36,56 +38,50 @@ const StudentFeedback = () => {
       };
 
       
-    const handleSubmit = async (e) => {
-      e.preventDefault();
-
-      if (
+      const handleSubmit = async (e) => {
+        e.preventDefault();
+      
+        if (
           !formData.session ||
           !formData.course ||
           !formData.branch ||
           !formData.semester ||
           !formData.year ||
           !formData.questionRatings
-
-      ) {
-          alert('Please fill in all the required fields and provide ratings for all questions.');
+        ) {
+          message.error('Please fill in all the required fields and provide ratings for all questions.');
           return;
-      }
-
-      try {
-          const response = await fetch('', {
-              method: 'POST',
-              headers: {
-                  'Content-Type': 'application/json',
-              },
-              body: JSON.stringify({
-                  session: formData.session,
-                  course: formData.course,
-                  branch: formData.branch,
-                  semester: formData.semester,
-                  year: formData.year, 
-                  questionRatings: formData.questionRatings,
-              }),
+        }
+        try {
+          const response = await axios.post('http://localhost:3000/student/feedback', {
+            session: formData.session,
+            program: formData.course,
+            branch: formData.branch,
+            semester: formData.semester,
+            year: formData.year,
+            questionRating: formData.questionRatings,
           });
-
-          const data = await response.json();
-
+      
+          // Assuming the response contains the JSON data
+          const data = response.data;
+      
           if (data.error) {
-              alert('Error: Enrollment number has already been used.');
+            message.error(data.error);
           } else {
-              alert('Feedback Submitted successfully!');
-              setFormData({
-                  branch: '',
-                  semester: '',
-                  yearOfAdmission: '',
-                  emailId: '',
-                  questionRatings: Array(9).fill(0),
-              });
+            message.success('Feedback Submitted successfully!');
+            setFormData({
+              ...formData,
+              branch: '',
+              semester: '',
+              year: '',
+              questionRatings: Array(9).fill(0),
+            });
           }
-      } catch (error) {
-          console.error('Error in submitting feedback:', error);
-      }
-  };
+        } catch (error) {
+          message.error('Error in submitting feedback. Please try again later.');
+        }
+      };
+      
   return (
     <div>
       <Navbar/>

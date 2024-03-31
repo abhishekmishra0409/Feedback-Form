@@ -3,7 +3,5 @@ const router = express.Router();
 const alumniController = require('../Controller/AlumniController');
 
 router.post('/feedback', alumniController.AlumniFeedback);
-router.get('/', (req,res)=>{
-    res.send("Heyyy jiii or sb bdiya")
-});
+router.get('/', alumniController.getAllAlumni);
 module.exports = router;

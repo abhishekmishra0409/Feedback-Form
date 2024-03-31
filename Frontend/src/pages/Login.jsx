@@ -1,24 +1,23 @@
 import { useState } from 'react';
-// import axios from 'axios';
+import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import './Login.css';
-
+import { message } from 'antd';
 const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
-    e.preventDefault(); // Prevent the default form submission
+    e.preventDefault();
 
     try {
-    //   const response = await axios.post('http://172.16.89.96:5000/login', { username, password });
-    //   console.log(response.data.message);
+     await axios.post('http://localhost:3000/login', { username, password });
+      // console.log(response.data.message);
       navigate(`/admin`);
+      message.success("Login Successfully")
     } catch (error) {
-      console.error(error);
-      // Handle login error
-      alert('Invalid Username or Password!');
+      message.error('Invalid Username or Password!');
     }
   };
 

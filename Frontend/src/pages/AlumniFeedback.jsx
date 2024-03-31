@@ -1,6 +1,7 @@
-import React, {useState} from 'react'
+import {useState} from 'react'
 import Navbar from '../small pages/Navbar'
 import Footer from '../small pages/Footer'
+import { message } from 'antd'
 
 const AlumniFeedback = () => {
 
@@ -41,7 +42,6 @@ const AlumniFeedback = () => {
       
     const handleSubmit = async (e) => {
       e.preventDefault();
-      console.log(formData);
       if (
           !formData.name ||
           !formData.enrollment ||
@@ -54,7 +54,7 @@ const AlumniFeedback = () => {
           !formData.questionRatings
 
       ) {
-          alert('Please fill in all the required fields and provide ratings for all questions.');
+        message.error('Please fill in all the required fields and provide ratings for all questions.');
           return;
       }
 
@@ -80,9 +80,9 @@ const AlumniFeedback = () => {
           const data = await response.json();
 
           if (data.error) {
-              alert('Error: Enrollment number has already been used.');
+            message.error('Error: Enrollment number has already been used.');
           } else {
-              alert('Feedback Submitted successfully!');
+            message.success('Feedback Submitted successfully!');
               // Reset the form after successful submission
               setFormData({
                   name: '',
