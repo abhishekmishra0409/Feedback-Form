@@ -22,8 +22,20 @@ const StudentFeedback = async (req, res) => {
 
 const getAllStudents = async (req, res) => {
     try {
-        const students = await Student.find();
-        res.status(200).json(students);
+        const queryObj = { ...req.query };
+        let queryStr = JSON.stringify(queryObj);
+        queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g, match => `$${match}`);
+
+        let query = Student.find(JSON.parse(queryStr))
+
+        const students = await query;
+        const totalCount = await Student.countDocuments(JSON.parse(queryStr));
+
+        res.status(200).json({
+            success: true,
+            total: totalCount,
+            students
+        });
     } catch (error) {
         res.status(500).json({ error: error.message });
     }

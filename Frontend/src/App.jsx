@@ -9,6 +9,7 @@ import Admin from './pages/Admin.jsx'
 import Student from './pages/GetStudent.jsx'
 import Alumni from './pages/GetAlumni.jsx';
 import Faculty from './pages/GetFaculty.jsx';
+import FetchApi from "./pages/FetchApi.jsx"
 
 function App() {
 
@@ -16,6 +17,7 @@ function App() {
     <>
       <BrowserRouter>
        <Routes>
+       <Route exact path='/fetch' element = {<FetchApi/>}  />
          <Route exact path='/' element = {<FeedbackForm/>}  />
          <Route exact path='/student' element={<StudentFeedback />} />
          <Route exact path='/teacher' element = {<TeacherFeedback />} />
