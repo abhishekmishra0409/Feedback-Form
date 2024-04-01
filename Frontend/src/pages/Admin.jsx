@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   MenuFoldOutlined,
   MenuUnfoldOutlined,
@@ -13,11 +13,21 @@ import { FaUser } from "react-icons/fa";
 
 const { Header, Sider, Content } = Layout;
 
-const LayoutD = () => {
+const AdminLayout = () => {
   const [collapsed, setCollapsed] = useState(false);
   const navigate = useNavigate();
 
+  useEffect(() => {
+    const token = sessionStorage.getItem("token");
+    if (!token) {
+      navigate("/login"); 
+    }
+  },[] ); 
 
+  const handleLogout = () => {
+    sessionStorage.removeItem("token");
+    navigate("/login");
+  };
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
@@ -60,8 +70,7 @@ const LayoutD = () => {
           defaultSelectedKeys={[data.key]}
           onClick={({ key }) => {
             if (key === "signout") {
-                navigate('/login')
-            //   handleSignOut();
+              handleLogout()
             } else {
               navigate(key);
             }
@@ -71,7 +80,6 @@ const LayoutD = () => {
       </Sider>
       <Layout>
         <Header
-          className="d-flex justify-content-between ps-1 pe-5"
           style={{
             padding: 0,
             background: colorBgContainer,
@@ -87,27 +95,18 @@ const LayoutD = () => {
               height: 64,
             }}
           />
-          {/* <div >
-            <div  style={{height:'100%', display:'flex', justifyContent:'center', alignItems:'center'}}>
-              <div >
-                {user ? (
-                  <>
-                    <h5 style={{height:'100%', fontSize:"17px"}}  className="mb-0">{user.name}</h5>         
-                  </>
-                ) : (
-                  <h5 className="mb-0">{user.email}</h5>  
-                )}
-              </div>
-            </div>
-          </div> */}
         </Header>
         <Content
           style={{
             margin: "24px 16px",
             padding: 24,
             minHeight: 280,
+            maxHeight: "calc(100vh - 112px)", 
             background: colorBgContainer,
             borderRadius: borderRadiusLG,
+            overflow: 'auto' ,
+            scrollbarWidth: 'thin',
+            scrollbarColor: '#888 transparent' 
           }}
         >
         
@@ -118,4 +117,4 @@ const LayoutD = () => {
   );
 };
 
-export default LayoutD;
+export default AdminLayout;

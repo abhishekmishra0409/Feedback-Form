@@ -27,8 +27,20 @@ const AlumniFeedback = async (req, res) => {
 
 const getAllAlumni = async (req, res) => {
     try {
-        const alumni = await Alumni.find();
-        res.status(200).json({ alumni });
+        const queryObj = { ...req.query };
+        let queryStr = JSON.stringify(queryObj);
+        queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g, match => `$${match}`);
+
+        let query = Alumni.find(JSON.parse(queryStr))
+
+        const alumni = await query;
+        const totalCount = await Alumni.countDocuments(JSON.parse(queryStr));
+
+        res.status(200).json({
+            success: true,
+            total: totalCount,
+            alumni
+        });
     } catch (error) {
         res.status(500).json({ error: error.message });
     }

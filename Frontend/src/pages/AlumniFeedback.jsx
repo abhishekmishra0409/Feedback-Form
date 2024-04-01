@@ -126,52 +126,72 @@ const AlumniFeedback = () => {
      
           <label>
             Passout Year:
-          <input name='passout' type='text' placeholder='(i.e) 2018, 2021, 2022 ..' value={formData.passout} onChange={handleInputChange} />
+          <select className="s-2" name="passout" value={formData.passout} onChange={handleInputChange}>
+            <option value=""> Passout Year </option>
+            <option value="2008">2008</option>
+            <option value="2009">2009</option>
+            <option value="2010">2010</option>
+            <option value="2011">2011</option>
+            <option value="2012">2012</option>
+            <option value="2013">2013</option>
+            <option value="2014">2014</option>
+            <option value="2015">2015</option>
+            <option value="2016">2016</option>
+            <option value="2017">2017</option>
+            <option value="2018">2018</option>
+            <option value="2019">2019</option>
+            <option value="2020">2020</option>
+            <option value="2021">2021</option>
+            <option value="2022">2022</option>
+            <option value="2023">2023</option>
+            <option value="2024">2024</option>
+            <option value="2025">2025</option>
+            <option value="2026">2026</option>  
+            <option value="2027">2027</option>
+            <option value="2028">2028</option>
+            <option value="2029">2029</option>
+            <option value="2030">2030</option>
+            <option value="2031">2031</option>
+            <option value="2032">2032</option>
+        </select>
           </label>
           <br />
       
 
           <label>
         Course:
-        <select name="course" value={formData.course} onChange={handleInputChange}>
+        <select className="s-2" name="course" value={formData.course} onChange={handleInputChange}>
           <option value="">Select Course</option>
           <option value="btech">B.Tech</option>
           <option value="mtech">M.Tech</option>
         </select>
       </label>
       <br />
+      <label>
+            Branch:
+            <select className="s-2"name="branch" value={formData.branch} onChange={handleInputChange}>
+            <option value="">Select Branch</option>
       {formData.course === 'btech' && (
         <>
-          <label>
-            Branch:
-            <select name="branch" value={formData.branch} onChange={handleInputChange}>
-              <option value="">Select Branch</option>
+              
               <option value="cse">CSE</option>
               <option value="ece">ECE</option>
-            </select>
-          </label>
-          <br />
         </>
       )}
-        
       { formData.course ==='mtech' && (
         <>
-
-        <label>
-            Branch:
-            <select name="branch" value={formData.branch} onChange={handleInputChange}>
-              <option value="">Select Branch</option>
               <option value="cse">ITE</option>
               <option value="ece">MEE</option>
-            </select>
-          </label>
         </>
           )
       } 
+       </select>
+          </label>
+          <br />
         
 
       <label> Current Status:
-      <select name="currentStatus" value={formData.currentStatus} onChange={handleInputChange}>
+      <select className="s-2" name="currentStatus" value={formData.currentStatus} onChange={handleInputChange}>
       <option value="">Select Your Current Status</option>
       <option value="higher_studies">Higher Studies</option> 
       <option value="govt_sector">Govt. Sector</option> 

@@ -12,8 +12,9 @@ const Login = () => {
     e.preventDefault();
 
     try {
-     await axios.post('http://localhost:3000/login', { username, password });
-      // console.log(response.data.message);
+
+     const response = await axios.post('http://localhost:3000/login', { username, password });
+     sessionStorage.setItem("token",response.data.token)
       navigate(`/admin`);
       message.success("Login Successfully")
     } catch (error) {

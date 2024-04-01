@@ -4,7 +4,7 @@ import ReactApexChart from 'react-apexcharts';
 import { Select } from 'antd';
 
 const { Option } = Select;
-
+  
 const StudentPage = () => {
   const [studentData, setStudentData] = useState([]);
   const [studentFilteredData, setStudentFilteredData] = useState([]);
@@ -45,7 +45,6 @@ const StudentPage = () => {
       }
   
       const response = await axios.get(url);
-      // console.log('Fetched Filtered Data:', response.data.students);
       setStudentFilteredData(response.data.students);
     } catch (error) {
       console.error('Error fetching filtered student data:', error);
@@ -54,17 +53,13 @@ const StudentPage = () => {
 
   const handleFilterChange = () => {
     fetchFilteredData();
-    // console.log(studentData);
   };
-
-
 
   const sessions = studentData && studentData.length > 0 ? [...new Set(studentData.map(student => student.session))] : [];
   const programs = studentData && studentData.length > 0 ? [...new Set(studentData.map(student => student.program))] : [];
   const branches = studentData && studentData.length > 0 ? [...new Set(studentData.map(student => student.branch))] : [];
   const semesters = studentData && studentData.length > 0 ? [...new Set(studentData.map(student => student.semester))] : [];
   const years = studentData && studentData.length > 0 ? [...new Set(studentData.map(student => student.year))] : [];
-
 
   const sessionOptions = sessions.map(session => <Option key={session} value={session}>{session}</Option>);
   const programOptions = programs.map(program => <Option key={program} value={program}>{program}</Option>);
@@ -91,7 +86,6 @@ const StudentPage = () => {
     return questionRatings;
   };
   
-
   const questions = studentFilteredData && studentFilteredData.length > 0 ? [...Array(studentFilteredData[0]?.questionRating.length).keys()] : [];
   const seriesData = questions.map((questionIndex) => {
     const ratings = calculateQuestionRatings(studentFilteredData);
@@ -110,16 +104,12 @@ const StudentPage = () => {
       }
     });
   
-    // Prepare data for ApexCharts
     const chartData = Object.keys(totalRatings).map((rating) => totalRatings[rating]);
     return {
       name: `Question ${questionIndex + 1}`,
       data: chartData,
     };
-   
   });
-
-  
 
   const options = {
     chart: {
@@ -132,9 +122,7 @@ const StudentPage = () => {
     tooltip: {
       enabled: true,
     },
-    
   };
-
 
   return (
     <div>
@@ -184,12 +172,11 @@ const StudentPage = () => {
         <h2>Ratings Distribution for Each Question</h2>
         <div>
         {seriesData.map((questionSeries, index) => (
-  <div key={index} style={{ width: '70%' }}>
-    <h3>{questionSeries.name}</h3>
-    <ReactApexChart options={options} series={ questionSeries.data } type="pie" height={250} />
-  </div>
-))}
-
+          <div key={index} style={{ width: '70%' }}>
+          <h3>{questionSeries.name}</h3>
+            <ReactApexChart options={options} series={ questionSeries.data } type="pie" height={250} />
+           </div>
+          ))}
         </div>
       </div>
       )}

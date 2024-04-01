@@ -7,7 +7,7 @@ const TeacherFeedback = () => {
     const [formData, setFormData] = useState({
         department: '',
         session: '',
-        questionRatings: Array(9).fill(0),
+        questionRating: Array(9).fill(0),
     });
 
     const handleInputChange = (e) => {
@@ -25,9 +25,9 @@ const TeacherFeedback = () => {
 
     const handleRatingChange = (index, rating) => {
         setFormData((prevData) => {
-            const updatedRatings = [...prevData.questionRatings];
+            const updatedRatings = [...prevData.questionRating];
             updatedRatings[index] = rating;
-            return { ...prevData, questionRatings: updatedRatings };
+            return { ...prevData, questionRating: updatedRatings };
         });
     };
 
@@ -37,7 +37,7 @@ const TeacherFeedback = () => {
         if (
             !formData.session ||
             !formData.department ||
-            !formData.questionRatings
+            !formData.questionRating
         ) {
             message.error('Please fill in all the required fields and provide ratings for all questions.');
             return;
@@ -52,7 +52,7 @@ const TeacherFeedback = () => {
                 body: JSON.stringify({
                     session: formData.session,
                     department: formData.department,
-                    questionRatings: formData.questionRatings,
+                    questionRating: formData.questionRating,
                 }),
             });
 
@@ -66,7 +66,7 @@ const TeacherFeedback = () => {
                 setFormData({
                     ...formData,
                     department: '',
-                    questionRatings: Array(9).fill(0),
+                    questionRating: Array(9).fill(0),
                 });
             }
         } catch (error) {
@@ -82,9 +82,10 @@ const TeacherFeedback = () => {
       <div className='mdiv'>
         <div className='upper' style={{ height: '200px' }}>
           <div className='first'>
-            <h5>(Enter Details carefully)</h5>
+            <h3>Enter Details carefully</h3>
 
-            <label> Department:
+            <div className='d-1'>
+            <label> Department:</label>
                 <select name="department" value={formData.department} onChange={handleInputChange}>
                                 <option value="">Select Department</option>
                                 <option value="IT">IT</option>
@@ -92,9 +93,10 @@ const TeacherFeedback = () => {
                                 <option value="EC">EC</option>
                               {/* Add more departments as needed */}
                 </select>
-            </label>
+                
             <label>
               Session:
+              </label>
               <select
                 name='session'
                 value={formData.session}
@@ -119,7 +121,8 @@ const TeacherFeedback = () => {
                 <option value='2030-2031'>2030-2031</option>
                 <option value='2031-2032'>2031-2032</option>
               </select>
-            </label>
+            
+            </div>
           </div>
         </div>
 
@@ -165,7 +168,7 @@ const TeacherFeedback = () => {
                             type='radio'
                             value={rating}
                             onChange={() => handleRatingChange(index, rating)}
-                            checked={formData.questionRatings[index] === rating}
+                            checked={formData.questionRating[index] === rating}
                           />
                         </label>
                       ))}

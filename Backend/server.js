@@ -37,7 +37,6 @@ const connectDB = async () => {
 
 connectDB();
 
-
 // allowed username and password
 const allowedUsername = 'adminaccess';
 const allowedPassword = 'admin@svce';
@@ -49,7 +48,7 @@ app.post('/login', async (req, res) => {
 
         // Check
         if (username === allowedUsername && password === allowedPassword) {
-            res.json({ message: 'Login successful' });
+            res.json({ message: 'Login successful' ,token:"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c" });
         } else {
             res.status(401).json({ message: 'Invalid username or password' });
         }

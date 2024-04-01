@@ -1,4 +1,5 @@
 const Faculty = require('../Model/FacultyModel');
+const Student = require("../Model/StudentModel");
 
 const FacultyFeedback = async (req, res) => {
     try {
@@ -18,8 +19,20 @@ const FacultyFeedback = async (req, res) => {
 
 const getAllFaculty = async (req, res) => {
     try {
-        const faculty = await Faculty.find();
-        res.status(200).json({ faculty });
+        const queryObj = { ...req.query };
+        let queryStr = JSON.stringify(queryObj);
+        queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g, match => `$${match}`);
+
+        let query = Faculty.find(JSON.parse(queryStr))
+
+        const faculty = await query;
+        const totalCount = await Faculty.countDocuments(JSON.parse(queryStr));
+
+        res.status(200).json({
+            success: true,
+            total: totalCount,
+            faculty
+        });
     } catch (error) {
         res.status(500).json({ error: error.message });
     }

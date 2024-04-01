@@ -5,6 +5,7 @@ import './submit.css'
 import axios from 'axios'
 import { message } from 'antd'
 
+
 const StudentFeedback = () => {
         const [formData, setFormData] = useState({
         session: '',
@@ -71,6 +72,8 @@ const StudentFeedback = () => {
             message.success('Feedback Submitted successfully!');
             setFormData({
               ...formData,
+              session:"",
+              course:"",
               branch: '',
               semester: '',
               year: '',
@@ -89,9 +92,11 @@ const StudentFeedback = () => {
     <div className='mdiv'>
         <div className='upper'>
     <div className='first'>
-    <h3>(Enter your details carefully)</h3>
+    <h3>Enter your details carefully</h3>
+  
 
-      <label>
+  <div className='d-1'>
+  <label>
         Session:
         </label>
         <select name="session" value={formData.session} onChange={handleInputChange}>
@@ -115,7 +120,6 @@ const StudentFeedback = () => {
             <option value="2031-2032">2031-2032</option>
         </select>
       
-      <br />
       <label>
         Course:
         </label>
@@ -124,39 +128,28 @@ const StudentFeedback = () => {
           <option value="btech">B.Tech</option>
           <option value="mtech">M.Tech</option>
         </select>
-      <br />
-      {formData.course === 'btech' && (
-        <>
-          <label>
+  </div>
+
+  <div className='d-1'>
+  <label>
             Branch:
             </label>
             <select name="branch" value={formData.branch} onChange={handleInputChange}>
               <option value="">Select Branch</option>
+            {formData.course === 'btech' && (
+              <>
               <option value="cse">CSE</option>
               <option value="ece">ECE</option>
-            </select>
-          <br />
-        </>
-      )}
-        
-      { formData.course ==='mtech' && (
-        <>
-
-        <label>
-            Branch:
-            </label>
-            <select name="branch" value={formData.branch} onChange={handleInputChange}>
-              <option value="">Select Branch</option>
+              </>
+                  )}
+                   { formData.course ==='mtech' && (
+                <>
               <option value="cse">ITE</option>
               <option value="ece">MEE</option>
+              </>
+              )}
             </select>
-          
-        </>
-          )
-      } 
-          
-        
-
+         
       <label>
         Semester:
         </label>
@@ -172,19 +165,22 @@ const StudentFeedback = () => {
           <option value="8">8th Semester</option>
         </select>
       
-      <br />
-      <label>
+  </div>
+
+     
+      
+     
+      <label className='l-1'>
           Year:
-          </label>
-        <select name="year" value={formData.year} onChange={handleInputChange}>
+        <select className="s-2" name="year" value={formData.year} onChange={handleInputChange}>
           <option value="">Select Year</option>
           <option value="1">1st year</option>
           <option value="2">2nd year</option>
           <option value="3">3rd year</option>
           <option value="4">4th year</option>
            </select>
+          </label>
       
-      <br />
 
     </div>
     </div>
