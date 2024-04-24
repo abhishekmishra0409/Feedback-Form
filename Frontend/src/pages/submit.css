@@ -216,24 +216,43 @@ a:hover {
     height: auto;
     margin-bottom: 3px;
 }
+.t-left{
+    height: 500px;
+    width: 50%;
+    border-right: 1px solid black;
+    height: auto;
+    margin-bottom: 3px;
+}
 
-.b-left ul {
+.b-left .t-left ul {
     /* margin-top: 3.3vw; */
     padding: 0px 3px;
     
 }
-
-.b-left ul li {
+.t-left ul li {
     list-style: numeric;
     margin-left: 29px;
     font-size: 1.3vw;
     margin-top: 15px;
 }
-
+.b-left ul li {
+    list-style: numeric;
+    margin-left: 29px;
+    font-size: 1.5vw;
+    margin-top: 17px;
+}
 .b-right {
     width: 50%;
 }
-.b-right ul li{
+.t-right {
+    width: 50%;
+}
+.t-right ul li{
+    list-style: none;
+    
+    /* margin-top: 15px; */
+}
+.b-right ul li{ 
     list-style: none;
     /* margin-top: 15px; */
 }
@@ -248,7 +267,6 @@ a:hover {
     padding: 5px 5px;
     justify-content: center;
 }
-
 .sem select {
     font-size: 1vw;
     width: 20%;
@@ -257,7 +275,6 @@ a:hover {
     border-radius: 18px;
     padding: 3px;
 }
-
 .sem label {
     font-size: 1.7vw;
     font-weight: 600;
@@ -266,7 +283,6 @@ a:hover {
 .sem select option {
     background-color: white;
 }
-
 .tab {
     padding: 1px 5px;
     overflow-x: auto;
@@ -442,5 +458,5 @@ input[type='radio'] {
     transform: scale(2);
 }
 .InputRating{
-    margin: 17px;
+margin: 16px 20px ;
 }

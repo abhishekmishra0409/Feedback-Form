@@ -7,7 +7,7 @@ const TeacherFeedback = () => {
     const [formData, setFormData] = useState({
         department: '',
         session: '',
-        questionRating: Array(9).fill(0),
+        questionRating: Array(10).fill(0),
     });
 
     const handleInputChange = (e) => {
@@ -66,7 +66,7 @@ const TeacherFeedback = () => {
                 setFormData({
                     ...formData,
                     department: '',
-                    questionRating: Array(9).fill(0),
+                    questionRating: Array(10).fill(0),
                 });
             }
         } catch (error) {
@@ -90,8 +90,7 @@ const TeacherFeedback = () => {
                                 <option value="">Select Department</option>
                                 <option value="IT">IT</option>
                                 <option value="CS">CS</option>
-                                <option value="EC">EC</option>
-                              {/* Add more departments as needed */}
+                                <option value="EC">EC</option> 
                 </select>
                 
             <label>
@@ -128,39 +127,37 @@ const TeacherFeedback = () => {
 
         {/* Bottom */}
         <div className='botom'>
-          <div className='b-left'>
+          <div className='t-left'>
             <h2 className='tableHead'>Questions for Ratings</h2>
             <ul>
-              <li className='firstLi'>Course Outcomes were clearly identified</li>
-              <li>Relevance of the textbook to this course </li>
-              <li>Were the lecture/lab well organized and presented at a reasonable pace</li>
+              <li className='firstLi'>The vision and mission of the institution are well known to faculty.</li>
+              <li>The course contents fulfill the needs of students & industries. </li>
+              <li>Syllabus is suitable for/relevant to the course.</li>
               <li>
-                Did the problem worked out in the classroom/Online class help you to understand
-                how to solve question on your own
+              Faculty has the freedom to adopt/adapt new techniques/strategies of testing and assessment of students
               </li>
-              <li>Are the assignment/lab experiment procedure clearly explained</li>
+              <li>The administration is teacher friendly.</li>
               <li>
-                The learning resourse in the course help you to achive the course outcomes (Lecture
-                notes,PPTs,Online meterial etc.)
+              The institute Encourage the faculty members for research work.
               </li>
               <li>
-                The Quality of teaching in the course help you to achive the course outcomes
+              The institute Encourage the faculty members to attend FDP/ Conference/ Seminar to upgrade their knowledge. 
               </li>
               <li>
-                Are you motivated to achive the cou rse outcomes.(Having the desire or drive to
-                learn, to complete task and to willing strive for goals)
+              The institute has safe transport facilities. 
               </li>
-              <li>Your overall satisfaction about the course</li>
+              <li>The environment of institute is free from faculty member caste discrimination.</li>
+              <li>The environment of institute is free from gender discrimination.</li>
             </ul>
           </div>
-          <div className='b-right'>
-            <h2 className='tableHead'>Rate 1 To 5 according to questions</h2>
+          <div className='t-right'>
+            <h2 className='tableHead'>Rate according to questions</h2>
             <div className='tab'>
               <ul>
-                {[...Array(9).keys()].map((index) => (
+                {[...Array(10).keys()].map((index) => (
                   <li key={index} className='firstLi'>
                     <div className='rating-container'>
-                      {[1, 2, 3, 4, 5].map((rating) => (
+                      {["Strongly Agree", "Agree", "Disagree", "Strongly Disagree"].map((rating) => (
                         <label key={rating}>
                           {rating}
                           <input

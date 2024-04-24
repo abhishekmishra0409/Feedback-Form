@@ -14,7 +14,7 @@ const AlumniFeedback = () => {
         currentStatus:'',
         mail:'',
         description:'',
-        questionRatings: Array(9).fill(0),
+        questionRatings: Array(7).fill(0),
         });
 
         const handleInputChange = (e) => {
@@ -93,7 +93,7 @@ const AlumniFeedback = () => {
                   currentStatus: '',
                   mail: '',
                   description: '',
-                  questionRatings: Array(9).fill(0)
+                  questionRatings: Array(7).fill(0)
               });
           }
       } catch (error) {
@@ -218,28 +218,26 @@ const AlumniFeedback = () => {
     </div>
     {/*  Questions  */}
     <div className="botom">
-    <div className="b-left">
+    <div className="t-left">
                             <h2 className="tableHead">Questions for Ratings</h2>
                             <ul>
-                                <li className='firstLi'>Course Outcomes were clearly identified</li>
-                                <li>Relevance of the textbook to this course </li>
-                                <li>Were the lecture/lab well organized and presented at a reasonable pace</li>
-                                <li>Did the problem worked out in the classroom/Online class help you to understand how to solve question on your own</li>
-                                <li>Are the assignment/lab experiment procedure clearly explained</li>
-                                <li>The learning resourse in the course help you to achive the course outcomes (Lecture notes,PPTs,Online meterial etc.)</li>
-                                <li>The Quality of teaching in the course help you to achive the course outcomes</li>
-                                <li>Are you motivated to achive the cou rse outcomes.(Having the desire or drive to learn, to complete task and to willing strive for goals)</li>
-                                <li>Your overall satisfaction about the course</li>
+                                <li className='firstLi'>Institute communication through mails/calls/SMS to alumni.</li>
+                                <li>The curriculum and syllabus content were appropriate for placement / higher education.</li>
+                                <li>Institute has good library, sports, laboratories, Canteen, and Classroom facilities. </li>
+                                <li>The extracurricular activities conducted at SVCE to develop the personality.</li>
+                                <li>Trainings/ workshop/ expert talk conducted in the institute.</li>
+                                <li>Carrier counseling session conducted in institute</li>
+                                <li>Institute provided the good placement facilities.</li>
                             </ul>
                         </div>
-    <div className='b-right'>
-                            <h2 className="tableHead">Rate 1 To 5 according to questions</h2>
+    <div className='t-right'>
+                            <h2 className="tableHead">Rate according to questions</h2>
                             <div className='tab'>
                                 <ul>
-                                    {[...Array(9).keys()].map((index) => (
+                                    {[...Array(7).keys()].map((index) => (
                                         <li key={index} className="firstLi">
                                             <div className="rating-container">
-                                                {[1, 2, 3, 4, 5].map((rating) => (
+                                                {["Strongly Agree", "Agree", "Disagree", "Strongly Disagree"].map((rating) => (
                                                     <label key={rating}>
                                                         {rating}
                                                         <input className={'InputRating'}

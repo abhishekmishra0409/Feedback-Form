@@ -13,7 +13,7 @@ const StudentFeedback = () => {
         branch: '',
         semester: '',
         year: '',
-        questionRatings: Array(9).fill(0),
+        questionRatings: Array(12).fill(0),
         });
 
         const handleInputChange = (e) => {
@@ -77,7 +77,7 @@ const StudentFeedback = () => {
               branch: '',
               semester: '',
               year: '',
-              questionRatings: Array(9).fill(0),
+              questionRatings: Array(12).fill(0),
             });
           }
         } catch (error) {
@@ -189,25 +189,28 @@ const StudentFeedback = () => {
     <div className="b-left">
                             <h2 className="tableHead">Questions for Ratings</h2>
                             <ul>
-                                <li className='firstLi'>Course Outcomes were clearly identified</li>
-                                <li>Relevance of the textbook to this course </li>
-                                <li>Were the lecture/lab well organized and presented at a reasonable pace</li>
-                                <li>Did the problem worked out in the classroom/Online class help you to understand how to solve question on your own</li>
-                                <li>Are the assignment/lab experiment procedure clearly explained</li>
-                                <li>The learning resourse in the course help you to achive the course outcomes (Lecture notes,PPTs,Online meterial etc.)</li>
-                                <li>The Quality of teaching in the course help you to achive the course outcomes</li>
-                                <li>Are you motivated to achive the cou rse outcomes.(Having the desire or drive to learn, to complete task and to willing strive for goals)</li>
-                                <li>Your overall satisfaction about the course</li>
+                                <li className='firstLi'>Faculty take classes as per schedule on regular basis.</li>
+                                <li>Faculty has the knowledge of subject in depth and able to explain difficult concept. </li>
+                                <li>Faculty has completed the syllabus of the subject.</li>
+                                <li>Faculty is able to maintain the discipline in class.</li>
+                                <li>Conduction of classes are effective and interesting.</li>
+                                <li>Faculty encourage participation of students in the class.</li>
+                                <li>Faculty behavior is polite. </li>
+                                <li>Students can easily communicate with faculty.</li>
+                                <li>Practical classes held as per the schedule</li>
+                                <li>Faculty conduct practical classes regularly.</li>
+                                <li>Faculty explain experiments and clarifies the doubt. </li>
+                                <li>Faculty has practical knowledge in depth.</li>
                             </ul>
                         </div>
     <div className='b-right'>
-                            <h2 className="tableHead">Rate 1 To 5 according to questions</h2>
+                            <h2 className="tableHead">Rate According to Question</h2>
                             <div className='tab'>
                                 <ul>
-                                    {[...Array(9).keys()].map((index) => (
+                                    {[...Array(12).keys()].map((index) => (
                                         <li key={index} className="firstLi">
                                             <div className="rating-container">
-                                                {[1, 2, 3, 4, 5].map((rating) => (
+                                                {["Strongly Agree", "Agree", "Disagree", "Strongly Disagree"].map((rating) => (
                                                     <label key={rating}>
                                                         {rating}
                                                         <input className={'InputRating'}

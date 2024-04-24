@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import ReactApexChart from 'react-apexcharts';
-import { Select } from 'antd';
+import { Select , Button } from 'antd';
+import * as XLSX from 'xlsx';
 
 const { Option } = Select;
   
@@ -13,7 +14,22 @@ const StudentPage = () => {
   const [selectedBranch, setSelectedBranch] = useState('');
   const [selectedSemester, setSelectedSemester] = useState('');
   const [selectedYear, setSelectedYear] = useState('');
-
+  const [showGraph, setShowGraph] = useState(false);
+  const question = [
+    " ",  
+    "1. Faculty take classes as per schedule on regular basis.",
+    "2. Faculty has the knowledge of subject in depth and able to explain difficult concept.",
+    "3. Faculty has completed the syllabus of the subject.",
+    "4. Faculty is able to maintain the discipline in class.",
+    "5. Conduction of classes are effective and interesting.",
+    "6. Faculty encourage participation of students in the class.",
+    "7. Faculty behavior is polite.",
+    "8. Students can easily communicate with faculty.",
+    "9. Practical classes held as per the schedule",
+    "10. Faculty conduct practical classes regularly.",
+    "11. Faculty explain experiments and clarifies the doubt.",
+    "12. Faculty has practical knowledge in depth.",
+  ];
   useEffect(() => {
     fetchData();
   }, []);
@@ -46,6 +62,7 @@ const StudentPage = () => {
   
       const response = await axios.get(url);
       setStudentFilteredData(response.data.students);
+      setShowGraph(true);
     } catch (error) {
       console.error('Error fetching filtered student data:', error);
     }
@@ -53,6 +70,13 @@ const StudentPage = () => {
 
   const handleFilterChange = () => {
     fetchFilteredData();
+  };
+
+  const handleExportToExcel = () => {
+    const worksheet = XLSX.utils.json_to_sheet(fetchFilteredData);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Filtered Data');
+    XLSX.writeFile(workbook, 'AlumniFeedback_data.xlsx');
   };
 
   const sessions = studentData && studentData.length > 0 ? [...new Set(studentData.map(student => student.session))] : [];
@@ -88,7 +112,7 @@ const StudentPage = () => {
   
   const questions = studentFilteredData && studentFilteredData.length > 0 ? [...Array(studentFilteredData[0]?.questionRating.length).keys()] : [];
   const seriesData = questions.map((questionIndex) => {
-    const ratings = calculateQuestionRatings(studentFilteredData);
+    calculateQuestionRatings(studentFilteredData);
     const totalRatings = {
       '1': 0,
       '2': 0,
@@ -105,8 +129,10 @@ const StudentPage = () => {
     });
   
     const chartData = Object.keys(totalRatings).map((rating) => totalRatings[rating]);
+    const questionName = question[questionIndex+1];
+  
     return {
-      name: `Question ${questionIndex + 1}`,
+      name: questionName,
       data: chartData,
     };
   });
@@ -118,7 +144,7 @@ const StudentPage = () => {
       height: 300,
     },
    
-    labels: ['Rating :1', 'Rating :2', 'Rating :3', 'Rating :4', 'Rating :5'],
+    labels: ['Strongly Agree :4', 'Agree :3', 'Disagree :2', 'Strongly Disagree :1'],
     tooltip: {
       enabled: true,
     },
@@ -157,7 +183,7 @@ const StudentPage = () => {
             </>
           )}
         </Select>
-        <Select value={selectedYear} onChange={(value) => setSelectedYear(value)} style={{ width: 200 }} onSelect={handleFilterChange} >
+        {/* <Select value={selectedYear} onChange={(value) => setSelectedYear(value)} style={{ width: 200 }} onSelect={handleFilterChange} >
           <Option value="">Select Year</Option>
           {selectedSession && selectedProgram && selectedBranch && selectedSemester &&(
             <>
@@ -165,18 +191,85 @@ const StudentPage = () => {
             </>
           )}
           
-        </Select>
+        </Select> */}
+        <Button
+          type="primary"
+          onClick={handleFilterChange}
+          disabled={!selectedSession || !selectedBranch || !selectedSemester || !selectedProgram}
+        >
+          Show Graph
+        </Button>
       </div>
-      {selectedSession && selectedProgram && selectedBranch && selectedSemester && selectedYear &&(
+      {showGraph && selectedSession && selectedProgram && selectedBranch && selectedSemester &&(
         <div>
+          <Button type="primary" onClick={handleExportToExcel}>Export to Excel</Button>
         <h2>Ratings Distribution for Each Question</h2>
         <div>
-        {seriesData.map((questionSeries, index) => (
-          <div key={index} style={{ width: '70%' }}>
-          <h3>{questionSeries.name}</h3>
-            <ReactApexChart options={options} series={ questionSeries.data } type="pie" height={250} />
-           </div>
-          ))}
+        {seriesData.map((questionSeries, index) => {
+              const options = {
+                chart: {
+                  toolbar: {
+                    show: true,
+                    offsetX: 0,
+                    offsetY: 0,
+                    tools: {
+                      download: true,
+                      selection: true,
+                      zoom: true,
+                      zoomin: true,
+                      zoomout: true,
+                      pan: true,
+                      reset: true | '<img src="/static/icons/reset.png" width="20">',
+                      customIcons: []
+                    },
+                    export: {
+                      csv: {
+                        filename: undefined,
+                        columnDelimiter: ',',
+                        headerCategory: 'category',
+                        headerValue: 'value',
+                        dateFormatter(timestamp) {
+                          return new Date(timestamp).toDateString()
+                        }
+                      },
+                      svg: {
+                        filename: undefined,
+                      },
+                      png: {
+                        filename: undefined,
+                      }
+                    },
+                    autoSelected: 'zoom' 
+                  },
+                  type: 'pie',
+                  width: '100%',
+                  height: 300,
+                },
+                title: {
+                  text: questionSeries.name,
+                  align: 'left',
+                  margin: 10,
+                  offsetX: 0,
+                  offsetY: 0,
+                  floating: false,
+                  style: {
+                    fontSize:  '14px',
+                    fontWeight:  'bold',
+                    fontFamily:  undefined,
+                    color:  '#263238'
+                  },
+                },
+                labels: ['Strongly Agree :4', 'Agree :3', 'Disagree :2', 'Strongly Disagree :1'],
+                tooltip: {
+                  enabled: true,
+                },
+              };
+              return (
+                <div key={index} style={{ width: '70%' }}>
+                  <ReactApexChart options={options} series={ questionSeries.data } type="pie" height={250} />
+                </div>
+              );
+            })}
         </div>
       </div>
       )}
