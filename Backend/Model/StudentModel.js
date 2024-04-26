@@ -21,6 +21,14 @@ const studentSchema = new mongoose.Schema({
         type: Number,
         required: true
     },
+    subject:{
+        type:String,
+        required:true
+    },
+    facultyName:{
+        type:String,
+        required:true
+    },
     questionRating: [{
             type: Number,
             required: true,

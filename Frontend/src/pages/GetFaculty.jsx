@@ -94,7 +94,7 @@ const FacultyPage = () => {
     const questionRatings = [];
 
     for (let i = 0; i < questionCount; i++) {
-      const ratings = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
+      const ratings = { 1: 0, 2: 0, 3: 0, 4: 0 };
       data.forEach((faculty) => {
         if (faculty.questionRating[i]) {
           ratings[faculty.questionRating[i]]++;
@@ -119,7 +119,6 @@ const FacultyPage = () => {
       2: 0,
       3: 0,
       4: 0,
-      5: 0,
     };
 
     filteredFacultyData.forEach((faculty) => {
@@ -139,19 +138,6 @@ const FacultyPage = () => {
       data: chartData,
     };
   });
-
-  const options = {
-    chart: {
-      type: "pie",
-      width: "100%",
-      height: 300,
-    },
-
-    labels: ['Strongly Agree :4', 'Agree :3', 'Disagree :2', 'Strongly Disagree :1'],
-    tooltip: {
-      enabled: true,
-    },
-  };
 
   return (
     <div>

@@ -4,75 +4,70 @@ import Footer from '../small pages/Footer';
 import { message } from 'antd';
 
 const TeacherFeedback = () => {
-    const [formData, setFormData] = useState({
-        department: '',
-        session: '',
-        questionRating: Array(10).fill(0),
+  const [formData, setFormData] = useState({
+    department: '',
+    session: '',
+    questionRating: Array(10).fill(0),
+  });
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value
     });
+  };
 
-    const handleInputChange = (e) => {
-        const { name, value } = e.target;
+  const handleRatingChange = (index, rating) => {
+    setFormData((prevData) => {
+      const updatedRatings = [...prevData.questionRating];
+      updatedRatings[index] = rating;
+      return { ...prevData, questionRating: updatedRatings };
+    });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (
+      !formData.session ||
+      !formData.department ||
+      !formData.questionRating
+    ) {
+      message.error('Please fill in all the required fields and provide ratings for all questions.');
+      return;
+    }
+
+    try {
+      const response = await fetch('http://localhost:3000/faculty/feedback', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          session: formData.session,
+          department: formData.department,
+          questionRating: formData.questionRating,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (data.error) {
+        message.error('Error: Enrollment number has already been used.');
+      } else {
+        message.success('Feedback Submitted successfully!');
+        // Reset the form after successful submission
         setFormData({
-            ...formData,
-            [name]: value
+          ...formData,
+          department: '',
+          questionRating: Array(10).fill(0),
         });
-    };
-
-    const handleDropdownChange = (e) => {
-        const { name, value } = e.target;
-        setFormData((prevData) => ({ ...prevData, [name]: value }));
-    };
-
-    const handleRatingChange = (index, rating) => {
-        setFormData((prevData) => {
-            const updatedRatings = [...prevData.questionRating];
-            updatedRatings[index] = rating;
-            return { ...prevData, questionRating: updatedRatings };
-        });
-    };
-
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-
-        if (
-            !formData.session ||
-            !formData.department ||
-            !formData.questionRating
-        ) {
-            message.error('Please fill in all the required fields and provide ratings for all questions.');
-            return;
-        }
-
-        try {
-            const response = await fetch('http://localhost:3000/faculty/feedback', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    session: formData.session,
-                    department: formData.department,
-                    questionRating: formData.questionRating,
-                }),
-            });
-
-            const data = await response.json();
-
-            if (data.error) {
-                message.error('Error: Enrollment number has already been used.');
-            } else {
-                message.success('Feedback Submitted successfully!');
-                // Reset the form after successful submission
-                setFormData({
-                    ...formData,
-                    department: '',
-                    questionRating: Array(10).fill(0),
-                });
-            }
-        } catch (error) {
-            console.error('Error in submitting feedback:', error);
-        }
-    };
+      }
+    } catch (error) {
+      console.error('Error in submitting feedback:', error);
+    }
+  };
 
   return (
     <div>
@@ -85,16 +80,34 @@ const TeacherFeedback = () => {
             <h3>Enter Details carefully</h3>
 
             <div className='d-1'>
-            <label> Department:</label>
-                <select name="department" value={formData.department} onChange={handleInputChange}>
-                                <option value="">Select Department</option>
-                                <option value="IT">IT</option>
-                                <option value="CS">CS</option>
-                                <option value="EC">EC</option> 
-                </select>
-                
-            <label>
-              Session:
+              <label> Department:</label>
+              <select name="department" value={formData.department} onChange={handleInputChange}>
+                <option value="">Select Department</option>
+                <option value="CS">CS</option>
+                <option value="IT">IT</option>
+                <option value="ECE">ECE</option>
+                <option value="CE">CE</option>
+                <option value="ME">ME</option>
+                <option value="EX">EX</option>
+                <option value="MCSE">MCSE</option>
+                <option value="PowerSystems">PowerSystems</option>
+                <option value="VLSI">VLSI</option>
+                <option value="MD">MD</option>
+                <option value="1-year">1-year</option>
+                <option value="Marketing/Finance">Marketing/Finance</option>
+                <option value="Marketing/HR">Marketing/HR</option>
+                <option value="Marketing/IT">Marketing/IT</option>
+                <option value="Finance/IT">Finance/IT</option>
+                <option value="Finance/HR">Finance/HR</option>
+                <option value="HR/IT">HR/IT</option>
+                <option value="HR/Production&Operation">HR/Production&Operation</option>
+                <option value="Marketing/Production&Operation">Marketing/Production&Operation</option>
+                <option value="Finance/Production&Operation">Finance/Production&Operation</option>
+                <option value="IT/Production&Operation">IT/Production&Operation</option>
+              </select>
+
+              <label>
+                Session:
               </label>
               <select
                 name='session'
@@ -120,7 +133,7 @@ const TeacherFeedback = () => {
                 <option value='2030-2031'>2030-2031</option>
                 <option value='2031-2032'>2031-2032</option>
               </select>
-            
+
             </div>
           </div>
         </div>
@@ -134,38 +147,38 @@ const TeacherFeedback = () => {
               <li>The course contents fulfill the needs of students & industries. </li>
               <li>Syllabus is suitable for/relevant to the course.</li>
               <li>
-              Faculty has the freedom to adopt/adapt new techniques/strategies of testing and assessment of students
+                Faculty has the freedom to adopt/adapt new techniques/strategies of testing and assessment of students
               </li>
               <li>The administration is teacher friendly.</li>
               <li>
-              The institute Encourage the faculty members for research work.
+                The institute Encourage the faculty members for research work.
               </li>
               <li>
-              The institute Encourage the faculty members to attend FDP/ Conference/ Seminar to upgrade their knowledge. 
+                The institute Encourage the faculty members to attend FDP/ Conference/ Seminar to upgrade their knowledge.
               </li>
               <li>
-              The institute has safe transport facilities. 
+                The institute has safe transport facilities.
               </li>
               <li>The environment of institute is free from faculty member caste discrimination.</li>
               <li>The environment of institute is free from gender discrimination.</li>
             </ul>
           </div>
           <div className='t-right'>
-            <h2 className='tableHead'>Rate according to questions</h2>
+            <p className="tableHead">Rate according to question</p>
             <div className='tab'>
               <ul>
                 {[...Array(10).keys()].map((index) => (
                   <li key={index} className='firstLi'>
                     <div className='rating-container'>
-                      {["Strongly Agree", "Agree", "Disagree", "Strongly Disagree"].map((rating) => (
+                      {["Strongly Agree", "Agree", "Disagree", "Strongly Disagree"].map((rating, ratingNo) => (
                         <label key={rating}>
                           {rating}
                           <input
                             className={'InputRating'}
-                            type='radio'
-                            value={rating}
-                            onChange={() => handleRatingChange(index, rating)}
-                            checked={formData.questionRating[index] === rating}
+                            type="radio"
+                            value={ratingNo + 1}
+                            onChange={() => handleRatingChange(index, ratingNo + 1)}
+                            checked={formData.questionRating[index] === ratingNo + 1}
                           />
                         </label>
                       ))}

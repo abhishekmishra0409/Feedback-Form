@@ -9,6 +9,8 @@ const StudentFeedback = async (req, res) => {
             branch: req.body.branch,
             semester: req.body.semester,
             year: req.body.year,
+            subject:req.body.subject,
+            facultyName:req.body.facultyName,
             questionRating:req.body.questionRating
         });
 
@@ -16,7 +18,7 @@ const StudentFeedback = async (req, res) => {
 
         res.status(201).json({ message: 'Student Feedback Submitted successfully', student: savedStudent });
     } catch (error) {
-        res.status(500).json({ error: error.message });
+        res.status(500).json({ message : "false" ,error: error.message });
     }
 };
 

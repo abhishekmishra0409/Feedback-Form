@@ -92,25 +92,6 @@ const AlumniPage = () => {
     XLSX.writeFile(workbook, 'AlumniFeedback_data.xlsx');
   };
 
-  const calculateQuestionRatings = (data) => {
-    if (!data || !data.length || !data[0]?.questionRatings) return [];
-  
-    const questionCount = data[0]?.questionRatings?.length;
-    const questionRatings = [];
-  
-    for (let i = 0; i < questionCount; i++) {
-      const ratings = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
-      data.forEach((faculty) => {
-        if (faculty.questionRatings[i]) {
-          ratings[faculty.questionRatings[i]]++;
-        }
-      });
-      questionRatings.push(ratings);
-    }
-  
-    return questionRatings;
-  };
-  
   const questions = filteredAlumniData && filteredAlumniData.length > 0 ? [...Array(filteredAlumniData[0]?.questionRatings?.length || 0).keys()] : [];
   const seriesData = questions.map((questionIndex) => {
     const totalRatings = {
@@ -118,7 +99,6 @@ const AlumniPage = () => {
       '2': 0,
       '3': 0,
       '4': 0,
-      '5': 0
     };
   
     filteredAlumniData.forEach(alumni => {
