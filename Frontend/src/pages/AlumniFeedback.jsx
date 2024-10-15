@@ -54,7 +54,7 @@ const AlumniFeedback = () => {
     }
 
     try {
-      const response = await fetch('http://localhost:3000/alumni/feedback', {
+      const response = await fetch('https://feedback-form-5vjm.onrender.com/alumni/feedback', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

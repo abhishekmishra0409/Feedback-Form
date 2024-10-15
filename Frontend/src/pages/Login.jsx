@@ -4,8 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import './Login.css';
 import { message } from 'antd';
 const Login = () => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [username, setUsername] = useState('admin');
+  const [password, setPassword] = useState('123456');
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
@@ -13,7 +13,7 @@ const Login = () => {
 
     try {
 
-     const response = await axios.post('http://localhost:3000/login', { username, password });
+     const response = await axios.post('https://feedback-form-5vjm.onrender.com/login', { username, password });
      sessionStorage.setItem("token",response.data.token)
       navigate(`/admin`);
       message.success("Login Successfully")

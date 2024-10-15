@@ -33,7 +33,7 @@ const FacultyPage = () => {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get("http://localhost:3000/faculty");
+      const response = await axios.get("https://feedback-form-5vjm.onrender.com/faculty");
       setFacultyData(response.data.faculty);
     } catch (error) {
       console.error("Error fetching faculty data:", error);
@@ -42,7 +42,7 @@ const FacultyPage = () => {
 
   const fetchFilteredData = async () => {
     try {
-      let url = "http://localhost:3000/faculty?";
+      let url = "https://feedback-form-5vjm.onrender.com/faculty?";
       if (selectedSession) {
         url += `session=${selectedSession}&`;
       }

@@ -37,7 +37,7 @@ const StudentPage = () => {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get('http://localhost:3000/student');
+      const response = await axios.get('https://feedback-form-5vjm.onrender.com/student');
       // console.log('Fetched Data:', response.data.students);
       setStudentData(response.data.students);
     } catch (error) {
@@ -47,7 +47,7 @@ const StudentPage = () => {
 
   const fetchFilteredData = async () => {
     try {
-      let url = 'http://localhost:3000/student?';
+      let url = 'https://feedback-form-5vjm.onrender.com/student?';
       if (selectedSession) {
         url += `session=${selectedSession}&`;
       }

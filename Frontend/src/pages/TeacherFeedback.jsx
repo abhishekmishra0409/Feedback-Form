@@ -39,7 +39,7 @@ const TeacherFeedback = () => {
     }
 
     try {
-      const response = await fetch('http://localhost:3000/faculty/feedback', {
+      const response = await fetch('https://feedback-form-5vjm.onrender.com/faculty/feedback', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

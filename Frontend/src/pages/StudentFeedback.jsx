@@ -53,7 +53,7 @@ const StudentFeedback = () => {
     }
     try {
       console.log(formData)
-      const response = await axios.post('http://localhost:3000/student/feedback', {
+      const response = await axios.post('https://feedback-form-5vjm.onrender.com/student/feedback', {
         session: formData.session,
         program: formData.program,
         branch: formData.branch,

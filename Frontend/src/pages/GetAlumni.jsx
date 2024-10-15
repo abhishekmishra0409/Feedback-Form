@@ -31,7 +31,7 @@ const AlumniPage = () => {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get('http://localhost:3000/alumni');
+      const response = await axios.get('https://feedback-form-5vjm.onrender.com/alumni');
       setAlumniData(response.data.alumni);
     } catch (error) {
       console.error('Error fetching alumni data:', error);
@@ -40,7 +40,7 @@ const AlumniPage = () => {
 
   const fetchFilteredData = async () => {
     try {
-      let url = 'http://localhost:3000/alumni?';
+      let url = 'https://feedback-form-5vjm.onrender.com/alumni?';
       if (selectedPassout) {
         url += `passout=${selectedPassout}&`;
       }
