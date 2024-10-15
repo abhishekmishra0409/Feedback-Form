@@ -9,7 +9,7 @@ const AlumniFeedback = () => {
     name: '',
     enrollment: '',
     passout: '',
-    course: '',
+    program: '',
     branch: '',
     currentStatus: '',
     mail: '',
@@ -40,7 +40,7 @@ const AlumniFeedback = () => {
       !formData.name ||
       !formData.enrollment ||
       !formData.passout ||
-      !formData.course ||
+      !formData.program ||
       !formData.branch ||
       !formData.currentStatus ||
       !formData.mail ||
@@ -48,6 +48,7 @@ const AlumniFeedback = () => {
       !formData.questionRatings
 
     ) {
+      // console.log(formData);
       message.error('Please fill in all the required fields and provide ratings for all questions.');
       return;
     }
@@ -62,7 +63,7 @@ const AlumniFeedback = () => {
           name: formData.name,
           enrollment: formData.enrollment,
           passout: formData.passout,
-          course: formData.course,
+          course: formData.program,
           branch: formData.branch,
           currentStatus: formData.currentStatus,
           mail: formData.mail,
@@ -72,7 +73,6 @@ const AlumniFeedback = () => {
       });
 
       const data = await response.json();
-
       if (data.error) {
         message.error('Error: Enrollment number has already been used.');
       } else {
@@ -82,7 +82,7 @@ const AlumniFeedback = () => {
           name: '',
           enrollment: '',
           passout: '',
-          course: '',
+          program: '',
           branch: '',
           currentStatus: '',
           mail: '',
@@ -233,7 +233,7 @@ const AlumniFeedback = () => {
         {/*  Questions  */}
         <div className="botom">
           <div className="t-left">
-            <h2 className="tableHead">Questions for Ratings</h2>
+            <h2 className="tableHead">Questions for Feedback</h2>
             <ul>
               <li className='firstLi'>Institute communication through mails/calls/SMS to alumni.</li>
               <li>The curriculum and syllabus content were appropriate for placement / higher education.</li>
@@ -252,7 +252,7 @@ const AlumniFeedback = () => {
                   <li key={index} className="firstLi">
                     <div className="rating-container">
                       {/* {["Strongly Agree", "Agree", "Disagree", "Strongly Disagree"] */}
-                      {["Strongly Agree", "Agree", "Disagree", "Strongly Disagree"].map((rating, ratingNo) => (
+                      {["Strongly Agree", "Agree","Average", "Disagree", "Strongly Disagree"].map((rating, ratingNo) => (
                         <label key={rating}>
                           {rating}
                           <input

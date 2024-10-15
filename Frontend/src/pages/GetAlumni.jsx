@@ -99,6 +99,7 @@ const AlumniPage = () => {
       '2': 0,
       '3': 0,
       '4': 0,
+      '5':0,
     };
   
     filteredAlumniData.forEach(alumni => {
@@ -120,107 +121,112 @@ const AlumniPage = () => {
   return (
     <div>
       <h1>Alumni Page</h1>
-      <div style={{ marginBottom: '20px' }}>
+      <div style={{marginBottom: '20px'}}>
         <Select
-          value={selectedPassout}
-          onChange={(value) => setSelectedPassout(value)}
-          style={{ width: 200, marginRight: '10px' }}
+            value={selectedPassout}
+            onChange={(value) => setSelectedPassout(value)}
+            style={{width: 200, marginRight: '10px'}}
         >
           <Option value="">Select Passout</Option>
           {passoutOptions}
         </Select>
         <Select
-          value={selectedCourse}
-          onChange={(value) => setSelectedCourse(value)}
-          style={{ width: 200, marginRight: '10px' }}
+            value={selectedCourse}
+            onChange={(value) => setSelectedCourse(value)}
+            style={{width: 200, marginRight: '10px'}}
         >
           <Option value="">Select Course</Option>
           {courseOptions}
         </Select>
         <Select
-          value={selectedBranch}
-          onChange={(value) => setSelectedBranch(value)}
-          style={{ width: 200, marginRight: '10px' }}
+            value={selectedBranch}
+            onChange={(value) => setSelectedBranch(value)}
+            style={{width: 200, marginRight: '10px'}}
         >
           <Option value="">Select Branch</Option>
           {branchOptions}
         </Select>
-        <Button type="primary" onClick={handleFilterChange} disabled={!selectedPassout || !selectedCourse || !selectedBranch}>
+
+        <Button type="primary" onClick={handleFilterChange}
+                disabled={!selectedPassout || !selectedCourse || !selectedBranch}>
           Show Graph
         </Button>
       </div>
       {showGraph && selectedPassout && selectedCourse && selectedBranch && (
-        <div>
-          <Button type="primary" onClick={handleExportToExcel}>Export to Excel</Button>
-          <h2>Ratings Distribution for Each Question</h2>
           <div>
-            {seriesData.map((questionSeries, index) => {
-              const options = {
-                chart: {
-                  toolbar: {
-                    show: true,
-                    offsetX: 0,
-                    offsetY: 0,
-                    tools: {
-                      download: true,
-                      selection: true,
-                      zoom: true,
-                      zoomin: true,
-                      zoomout: true,
-                      pan: true,
-                      reset: true | '<img src="/static/icons/reset.png" width="20">',
-                      customIcons: []
-                    },
-                    export: {
-                      csv: {
-                        filename: undefined,
-                        columnDelimiter: ',',
-                        headerCategory: 'category',
-                        headerValue: 'value',
-                        dateFormatter(timestamp) {
-                          return new Date(timestamp).toDateString()
+            <div style={{display: "flex", alignItems: "center"}}>
+              <Button type="primary" onClick={handleExportToExcel}>Export to Excel</Button>
+              <h5 style={{marginLeft: "10px"}}>Total Feedback Count : {filteredAlumniData .length}</h5>
+            </div>
+            <h2>Feedback Analysis for Each Question</h2>
+            <div>
+              {seriesData.map((questionSeries, index) => {
+                const options = {
+                  chart: {
+                    toolbar: {
+                      show: true,
+                      offsetX: 0,
+                      offsetY: 0,
+                      tools: {
+                        download: true,
+                        selection: true,
+                        zoom: true,
+                        zoomin: true,
+                        zoomout: true,
+                        pan: true,
+                        reset: true | '<img src="/static/icons/reset.png" width="20">',
+                        customIcons: []
+                      },
+                      export: {
+                        csv: {
+                          filename: undefined,
+                          columnDelimiter: ',',
+                          headerCategory: 'category',
+                          headerValue: 'value',
+                          dateFormatter(timestamp) {
+                            return new Date(timestamp).toDateString()
+                          }
+                        },
+                        svg: {
+                          filename: undefined,
+                        },
+                        png: {
+                          filename: undefined,
                         }
                       },
-                      svg: {
-                        filename: undefined,
-                      },
-                      png: {
-                        filename: undefined,
-                      }
+                      autoSelected: 'zoom'
                     },
-                    autoSelected: 'zoom' 
+                    type: 'pie',
+                    width: '100%',
+                    height: 300,
                   },
-                  type: 'pie',
-                  width: '100%',
-                  height: 300,
-                },
-                title: {
-                  text: questionSeries.name,
-                  align: 'left',
-                  margin: 10,
-                  offsetX: 0,
-                  offsetY: 0,
-                  floating: false,
-                  style: {
-                    fontSize:  '14px',
-                    fontWeight:  'bold',
-                    fontFamily:  undefined,
-                    color:  '#263238'
+                  title: {
+                    text: questionSeries.name,
+                    align: 'left',
+                    margin: 10,
+                    offsetX: 0,
+                    offsetY: 0,
+                    floating: false,
+                    style: {
+                      fontSize: '17px',
+                      fontWeight: 'bold',
+                      fontFamily: undefined,
+                      color: '#263238'
+                    },
                   },
-                },
-                labels: ['Strongly Agree :4', 'Agree :3', 'Disagree :2', 'Strongly Disagree :1'],
-                tooltip: {
-                  enabled: true,
-                },
-              };
-              return (
-                <div key={index} style={{ width: '70%' }}>
-                  <ReactApexChart options={options} series={ questionSeries.data } type="pie" height={250} />
-                </div>
-              );
-            })}
+                  labels: ['Strongly Agree : (5 Point)', 'Agree :(4 Point)', "Average :(3 Point)", 'Disagree :(2 Point)', 'Strongly Disagree :(1 Point)'],
+                  tooltip: {
+                    enabled: true,
+                  },
+                };
+                return (
+                    <div key={index} style={{width: '65%'}}>
+                      <ReactApexChart options={options} series={questionSeries.data} type="pie" height={250}/>
+                    </div>
+                );
+              })}
+            </div>
           </div>
-        </div>
       )}
     </div>
   );

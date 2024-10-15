@@ -94,7 +94,7 @@ const FacultyPage = () => {
     const questionRatings = [];
 
     for (let i = 0; i < questionCount; i++) {
-      const ratings = { 1: 0, 2: 0, 3: 0, 4: 0 };
+      const ratings = { 1: 0, 2: 0, 3: 0, 4: 0, 5:0};
       data.forEach((faculty) => {
         if (faculty.questionRating[i]) {
           ratings[faculty.questionRating[i]]++;
@@ -119,6 +119,7 @@ const FacultyPage = () => {
       2: 0,
       3: 0,
       4: 0,
+      5:0,
     };
 
     filteredFacultyData.forEach((faculty) => {
@@ -168,79 +169,80 @@ const FacultyPage = () => {
         </Button>
       </div>
       {showGraph && selectedSession && selectedDepartment && (
-        <div>
-          <Button type="primary" onClick={handleExportToExcel}>
-            Export to Excel
-          </Button>
-          <h2>Ratings Distribution for Each Question</h2>
           <div>
-          {seriesData.map((questionSeries, index) => {
-              const options = {
-                chart: {
-                  toolbar: {
-                    show: true,
-                    offsetX: 0,
-                    offsetY: 0,
-                    tools: {
-                      download: true,
-                      selection: true,
-                      zoom: true,
-                      zoomin: true,
-                      zoomout: true,
-                      pan: true,
-                      reset: true | '<img src="/static/icons/reset.png" width="20">',
-                      customIcons: []
-                    },
-                    export: {
-                      csv: {
-                        filename: undefined,
-                        columnDelimiter: ',',
-                        headerCategory: 'category',
-                        headerValue: 'value',
-                        dateFormatter(timestamp) {
-                          return new Date(timestamp).toDateString()
+            <div style={{display: "flex", alignItems: "center"}}>
+              <Button type="primary" onClick={handleExportToExcel}>Export to Excel</Button>
+              <h5 style={{marginLeft: "10px"}}>Total Feedback Count : {filteredFacultyData.length}</h5>
+            </div>
+            <h2>Feedback Analysis for Each Question</h2>
+            <div>
+              {seriesData.map((questionSeries, index) => {
+                const options = {
+                  chart: {
+                    toolbar: {
+                      show: true,
+                      offsetX: 0,
+                      offsetY: 0,
+                      tools: {
+                        download: true,
+                        selection: true,
+                        zoom: true,
+                        zoomin: true,
+                        zoomout: true,
+                        pan: true,
+                        reset: true | '<img src="/static/icons/reset.png" width="20">',
+                        customIcons: []
+                      },
+                      export: {
+                        csv: {
+                          filename: undefined,
+                          columnDelimiter: ',',
+                          headerCategory: 'category',
+                          headerValue: 'value',
+                          dateFormatter(timestamp) {
+                            return new Date(timestamp).toDateString()
+                          }
+                        },
+                        svg: {
+                          filename: undefined,
+                        },
+                        png: {
+                          filename: undefined,
                         }
                       },
-                      svg: {
-                        filename: undefined,
-                      },
-                      png: {
-                        filename: undefined,
-                      }
+                      autoSelected: 'zoom'
                     },
-                    autoSelected: 'zoom' 
+                    type: 'pie',
+                    width: '100%',
+                    height: 300,
                   },
-                  type: 'pie',
-                  width: '100%',
-                  height: 300,
-                },
-                title: {
-                  text: questionSeries.name,
-                  align: 'left',
-                  margin: 10,
-                  offsetX: 0,
-                  offsetY: 0,
-                  floating: false,
-                  style: {
-                    fontSize:  '14px',
-                    fontWeight:  'bold',
-                    fontFamily:  undefined,
-                    color:  '#263238'
+                  title: {
+                    text: questionSeries.name,
+                    align: 'left',
+                    margin: 10,
+                    offsetX: 0,
+                    offsetY: 0,
+                    floating: false,
+                    style: {
+                      fontSize: '15px',
+                      fontWeight: 'bold',
+                      fontFamily: undefined,
+                      color: '#263238'
+                    },
                   },
-                },
-                labels: ['Strongly Agree :4', 'Agree :3', 'Disagree :2', 'Strongly Disagree :1'],
-                tooltip: {
-                  enabled: true,
-                },
-              };
-              return (
-                <div key={index} style={{ width: '70%' }}>
-                  <ReactApexChart options={options} series={ questionSeries.data } type="pie" height={250} />
-                </div>
-              );
-            })} 
+                  labels: ['Strongly Agree : (5 Point)', 'Agree :(4 Point)', "Average :(3 Point)", 'Disagree :(2 Point)', 'Strongly Disagree :(1 Point)'],
+                  tooltip: {
+                    enabled: true,
+                  },
+                };
+                return (
+                    <div key={index} style={{width: '70%'}}>
+                      <ReactApexChart options={options} series={questionSeries.data} type="pie" height={250}/>
+                    </div>
+                );
+              })}
+            </div>
           </div>
-        </div>
       )}
     </div>
   );

@@ -76,12 +76,13 @@ const StudentPage = () => {
   const handleFilterChange = () => {
     fetchFilteredData();
   };
-
+  // console.log(studentFilteredData);
+  
   const handleExportToExcel = () => {
-    const worksheet = XLSX.utils.json_to_sheet(fetchFilteredData);
+    const worksheet = XLSX.utils.json_to_sheet(studentFilteredData);
     const workbook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(workbook, worksheet, 'Filtered Data');
-    XLSX.writeFile(workbook, 'AlumniFeedback_data.xlsx');
+    XLSX.writeFile(workbook, 'StudentFeedback_data.xlsx');
   };
 
   const sessions = studentData && studentData.length > 0 ? [...new Set(studentData.map(student => student.session))] : [];
@@ -103,7 +104,7 @@ const StudentPage = () => {
     const questionRatings = [];
   
     for (let i = 0; i < questionCount; i++) {
-      const ratings = { 1: 0, 2: 0, 3: 0, 4: 0 };
+      const ratings = { 1: 0, 2: 0, 3: 0, 4: 0,5:0 };
       data.forEach((student) => {
         if (student.questionRating[i]) {
           ratings[student.questionRating[i]]++;
@@ -124,6 +125,7 @@ const StudentPage = () => {
       '2': 0,
       '3': 0,
       '4': 0,
+      '5':0
     };
   
     studentFilteredData.forEach(student => {
@@ -195,8 +197,11 @@ const StudentPage = () => {
       </div>
       {showGraph && selectedSession && selectedProgram && selectedBranch && selectedSemester &&(
         <div>
-          <Button type="primary" onClick={handleExportToExcel}>Export to Excel</Button>
-        <h2>Ratings Distribution for Each Question for {facultyName}</h2>
+          <div style={{display:"flex" , alignItems:"center"}}>
+          <Button  type="primary" onClick={handleExportToExcel}>Export to Excel</Button>
+          <h5 style={{marginLeft:"10px"}}>Total Feedback Count : {studentFilteredData.length}</h5>
+          </div>
+        <h2>Feedback Analysis of {facultyName}</h2>
         <div>
         {seriesData.map((questionSeries, index) => {
               const options = {
@@ -246,19 +251,19 @@ const StudentPage = () => {
                   offsetY: 0,
                   floating: false,
                   style: {
-                    fontSize:  '14px',
+                    fontSize:  '18px',
                     fontWeight:  'bold',
                     fontFamily:  undefined,
                     color:  '#263238'
                   },
                 },
-                labels: ['Strongly Agree :4', 'Agree :3', 'Disagree :2', 'Strongly Disagree :1'],
+                labels: ['Strongly Agree : (5 Point)', 'Agree :(4 Point)',"Average :(3 Point)", 'Disagree :(2 Point)', 'Strongly Disagree :(1 Point)'],
                 tooltip: {
-                  enabled: true,
+                  enabled: false,
                 },
               };
               return (
-                <div key={index} style={{ width: '70%' }}>
+                <div key={index} style={{ width: '65%' }}>
                   <ReactApexChart options={options} series={ questionSeries.data } type="pie" height={250} />
                 </div>
               );

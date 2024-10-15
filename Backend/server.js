@@ -7,7 +7,7 @@ const cors = require('cors')
 const morgan = require('morgan')
 
 const app = express();
-
+// const HOST = '192.168.1.71';
 const PORT = 3000;
 app.use(morgan('dev'))
 app.use(express.json());
@@ -26,8 +26,7 @@ app.use((err, req, res, next) => {
 const connectDB = async () => {
     try {
         await mongoose.connect(
-            "mongodb://0.0.0.0/Feedback_Form",
-
+            process.env.MONGODB_URL,
         );
         console.log("Connected to MongoDB");
     } catch (error) {
@@ -38,8 +37,8 @@ const connectDB = async () => {
 connectDB();
 
 // allowed username and password
-const allowedUsername = 'adminaccess';
-const allowedPassword = 'admin@svce';
+const allowedUsername = 'admin';
+const allowedPassword = '123456';
 
 // Login Endpoint
 app.post('/login', async (req, res) => {
@@ -59,6 +58,6 @@ app.post('/login', async (req, res) => {
 });
 
 
-app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
+app.listen(PORT,  () => {
+    console.log(`Server is running on :${PORT}`);
 });

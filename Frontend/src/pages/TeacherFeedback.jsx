@@ -54,7 +54,8 @@ const TeacherFeedback = () => {
       const data = await response.json();
 
       if (data.error) {
-        message.error('Error: Enrollment number has already been used.');
+        console.error(data.error);
+        message.error('Error: Server Error  ');
       } else {
         message.success('Feedback Submitted successfully!');
         // Reset the form after successful submission
@@ -141,7 +142,7 @@ const TeacherFeedback = () => {
         {/* Bottom */}
         <div className='botom'>
           <div className='t-left'>
-            <h2 className='tableHead'>Questions for Ratings</h2>
+            <h2 className='tableHead'>Questions for Feedback</h2>
             <ul>
               <li className='firstLi'>The vision and mission of the institution are well known to faculty.</li>
               <li>The course contents fulfill the needs of students & industries. </li>
@@ -170,7 +171,7 @@ const TeacherFeedback = () => {
                 {[...Array(10).keys()].map((index) => (
                   <li key={index} className='firstLi'>
                     <div className='rating-container'>
-                      {["Strongly Agree", "Agree", "Disagree", "Strongly Disagree"].map((rating, ratingNo) => (
+                      {["Strongly Agree", "Agree","Average", "Disagree", "Strongly Disagree"].map((rating, ratingNo) => (
                         <label key={rating}>
                           {rating}
                           <input

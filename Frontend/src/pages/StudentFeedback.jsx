@@ -384,7 +384,7 @@ const StudentFeedback = () => {
         {/*  Questions  */}
         <div className="botom">
           <div className="b-left">
-            <h2 className="tableHead">Questions for Ratings</h2>
+            <h2 className="tableHead">Questions for Feedback</h2>
             <ul>
               <li className='firstLi'>Faculty take classes as per schedule on regular basis.</li>
               <li>Faculty has the knowledge of subject in depth and able to explain difficult concept. </li>
@@ -407,7 +407,7 @@ const StudentFeedback = () => {
                 {[...Array(12).keys()].map((index) => (
                   <li key={index} className="firstLi">
                     <div className="rating-container">
-                      {["Strongly Agree", "Agree", "Disagree", "Strongly Disagree"].map((rating, ratingNo) => (
+                      {["Strongly Agree", "Agree","Average", "Disagree", "Strongly Disagree"].map((rating, ratingNo) => (
                         <label key={rating}>
                           {rating}
                           <input
